@@ -17,4 +17,5 @@ export default defineComponent({
 <style lang="sass" scoped>
 .contentWrap
   display: flex
+  background: #F4F4F4
 </style>
