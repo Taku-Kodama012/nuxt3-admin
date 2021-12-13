@@ -5,7 +5,7 @@
     </div>
     <ul class="navList">
       <li class="navListItem">
-        <i class="fas fa-tachometer-alt"></i>
+        <i class="fas fa-tachometer-alt navIcon"></i>
         <NuxtLink to="/">daxhboard</NuxtLink>
       </li>
       <li class="navListItem">
@@ -34,13 +34,18 @@
   list-style-type: none
 
 .navListItem
+  display: flex
+  align-items: center
+  padding: 0 8px
+  border-radius: 4px
+  &:hover
+    background-color: rgba(255,255,255,.1)
+    color: #FFF
   a
     display: block
     padding: 8px
     text-decoration: none
     color: #c2c7d0
-    border-radius: 4px
-    &:hover
-      background-color: rgba(255,255,255,.1)
-      color: #FFF
+.navIcon
+  color: #fff
 </style>
