@@ -1,7 +1,7 @@
 <template>
   <header class="adminHeader">
     <div>
-      ハンバーガーメニュー
+      <hamburger />
     </div>
     <div>
       nav link
@@ -13,7 +13,9 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import Hamburger from './Hamburger.vue'
 export default defineComponent({
+  components: { Hamburger },
 })
 </script>
 
