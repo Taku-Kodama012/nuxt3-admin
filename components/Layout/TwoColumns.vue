@@ -4,18 +4,26 @@
       <custom-sidebar />
     </div>
     <div class="mainContent">
+      <custom-header />
+      <div class="mainContent">
       <NuxtPage />
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import CustomSidebar from "../block/common/CustomSidebar.vue";
+import CustomHeader from "../block/common/header/CustomHeader.vue"
 export default defineComponent({
-  components:{CustomSidebar}
+  components:{CustomSidebar,CustomHeader}
 })
 </script>
 <style lang="sass" scoped>
 .contentWrap
   display: flex
   background: #F4F4F4
+.sidebarWrap
+  flex-shrink: 0
+.mainContent
+  flex-grow: 2
 </style>

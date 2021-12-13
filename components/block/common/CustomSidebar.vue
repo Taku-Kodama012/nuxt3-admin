@@ -6,7 +6,7 @@
     <ul class="navList">
       <li class="navListItem">
         <i class="fas fa-tachometer-alt"></i>
-        <NuxtLink to="/">top</NuxtLink>
+        <NuxtLink to="/">daxhboard</NuxtLink>
       </li>
       <li class="navListItem">
         <NuxtLink to="/users">users</NuxtLink>
@@ -18,6 +18,7 @@
 </script>
 <style lang="sass" scoped>
 .sidbar
+
   min-height: 100vh
   padding: 30px 10px
   background: #343a40
