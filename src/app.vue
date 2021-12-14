@@ -4,6 +4,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import TwoColumns from './components/Layout/TwoColumns.vue'
 export default defineComponent({
   components: { TwoColumns },
@@ -14,7 +15,8 @@ ul
   margin: 0
   padding: 0
 
-li 
+li
   list-style-type: none
 
 </style>
+
