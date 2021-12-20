@@ -1,9 +1,21 @@
 <template>
   <div class="pageWrap">
-    <h1>dashboard</h1>
+    <card>
+      test
+    </card>
   </div>
 </template>
+<script lang="ts">
+import {defineComponent,SetupContext} from 'vue'
 
+import Card from "../components/block/Card.vue"
+
+export default defineComponent({
+  components:{
+    Card
+  }
+})
+</script>
 <style lang="sass">
 @import '../style/page.sass'
 

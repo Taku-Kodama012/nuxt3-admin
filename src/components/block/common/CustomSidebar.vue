@@ -10,7 +10,18 @@
           <NuxtLink to="/">daxhboard</NuxtLink>
         </li>
         <li class="navListItem">
-          <i class="fab fa-buromobelexperte navIcon"></i>
+          <accordion>
+            <template v-slot:label>
+              <i class="fab fa-buromobelexperte navIcon"></i>
+              UI Elements
+            </template>
+            <template v-slot:content>
+              <NuxtLink to="/uiElements/button">button</NuxtLink>
+            </template>
+          </accordion>
+        </li>
+        <li class="navListItem">
+          <i class="fas fa-users navIcon"></i>
           <NuxtLink to="/users">users</NuxtLink>
         </li>
       </ul>
@@ -21,7 +32,11 @@
 import {useSidebar} from '../../../store/sidebar'
 import {defineComponent,SetupContext} from 'vue'
 
+// components
+import Accordion from "../../module/Accordion.vue"
+
 export default defineComponent({
+  components:{Accordion},
   setup(_props, context: SetupContext) {
     const store = useSidebar()
     return {
@@ -33,7 +48,6 @@ export default defineComponent({
 </script>
 <style lang="sass" scoped>
 .sidbar
-
   min-height: 100vh
   padding: 30px 10px
   background: #343a40
