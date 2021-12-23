@@ -14,7 +14,7 @@
 <script lang="ts">
 import {defineComponent,SetupContext} from 'vue'
 
-import CustomSidebar from "../block/common/CustomSidebar.vue"
+import CustomSidebar from "../block/common/sidebar/CustomSidebar.vue"
 import CustomHeader from "../block/common/header/CustomHeader.vue"
 export default defineComponent({
   components:{CustomSidebar,CustomHeader}

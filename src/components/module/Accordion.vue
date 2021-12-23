@@ -30,17 +30,19 @@ export default defineComponent({
 <style lang="sass" scoped>
 .accordion
   margin: 2px 0
-  color: #fff
+  // width: 100%
   cursor: pointer
 
 .accordion__label
   position: relative
   margin: 0
+  padding: 8px
+  color: #c2c7d0
   &:after
     content:''
     position: absolute
     top: 50%
-    right: 5%
+    right: 5px
     width: 7px
     height: 7px
     border-right: 2px solid #fff
@@ -54,7 +56,7 @@ export default defineComponent({
       content:''
       position: absolute
       top: 50%
-      right: 5%
+      right: 5px
       width: 7px
       height: 7px
       border-right: 2px solid #fff
