@@ -1,5 +1,5 @@
 <template>
-  <button type="buttom" :class="classes" :style="styles" @click="$emit('button-click')">{{label}}</button>
+  <button type="buttom" :class="classes" :style="styles" @click="$emit('btnClick')">{{label}}</button>
 </template>
 
 <script lang="ts">
@@ -24,7 +24,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   label:"",
   appearance: "",
-  bgColor: "#164EC1",
+  bgColor: "#fff",
   txtColor: "#fff",
   outline:false
 })
@@ -49,10 +49,9 @@ const classes = computed(() => {
 </script>
 
 <style lang="sass">
-@import '../../style/_variable.sass'
 
 .base
-  background: #164EC1
+  background: #fff
   color: #fff
   padding: 8px 16px
   border: none
