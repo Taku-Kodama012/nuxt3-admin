@@ -64,13 +64,13 @@ export default defineComponent({
       transform: rotate(-135deg)
 
 .accordion__content
-  padding: 20px 14px
+  padding: 0 0 0 1rem
   color: #111
 .accordion__content
   &.isFlex
     display: flex
     flex-wrap: wrap
-    padding: 20px 14px
+    // padding: 20px 14px
     background: #fff
     color: #111
 

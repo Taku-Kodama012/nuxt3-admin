@@ -1,11 +1,13 @@
 <template>
-  <button type="buttom" :class="classes" :disabled="disabled" :style="styles" @click="$emit('btnClick')">{{label}}</button>
+  <button type="buttom" :class="classes" :disabled="disabled" :style="styles" @click="$emit('btnClick')">
+    <slot></slot>
+  </button>
 </template>
 
 <script lang="ts">
 // componentsをexport
 export default {
-  name: 'CustomButton'
+  name: 'ButtonIcons'
 }
 </script>
 
@@ -13,7 +15,6 @@ export default {
 import {computed} from 'vue'
 
 interface Props {
-  label:string,
   appearance?: string,
   bgColor?: string,
   txtColor?: string
@@ -23,7 +24,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label:"",
   appearance: "",
   bgColor: "#fff",
   txtColor: "#fff",

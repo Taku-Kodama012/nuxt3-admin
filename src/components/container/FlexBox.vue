@@ -17,7 +17,7 @@ interface Props {
   wrap?:boolean,
   column?: boolean,
   justify?:string,
-  align?:string
+  align?:string,
 }
 const props = withDefaults(defineProps<Props>(), {
   column: false,
@@ -25,7 +25,8 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const styles = computed(() => {
   return {
-    "justifyContent": props.justify
+    "justifyContent": props.justify,
+    "flexWrap": props.wrap&&"wrap",
   }
 })
 
@@ -38,4 +39,7 @@ const classes = computed(() => {
 <style lang="sass" >
 .flexContainer
   display: flex
+  > *
+    &:not(:last-child)
+      margin: 0 10px 0 0
 </style>
