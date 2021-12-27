@@ -1,12 +1,12 @@
 <template>
-  <div v-if="store.toggleState">
+  <template v-if="store.toggleState" >
     <aside class="sidbar">
       <div class="sidebarTop">
         <p class="logoText">Nuxt3 admin</p>
       </div>
       <side-nav />
     </aside>
-  </div>
+  </template>
 </template>
 <script lang="ts">
 import {useSidebar} from '../../../../store/sidebar'
@@ -28,8 +28,9 @@ export default defineComponent({
 </script>
 <style lang="sass" scoped>
 .sidbar
+  height: 100%
   min-height: 100vh
-  padding: 30px 10px
+  padding: 30px
   background: #343a40
   box-shadow:0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22)
 

@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt3'
+import { resolve } from 'path'
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
@@ -14,4 +15,8 @@ export default defineNuxtConfig({
     '@fortawesome/fontawesome-free/css/svg-with-js.css',
     '@fortawesome/fontawesome-free/css/v4-shims.css',
   ],
+  alias: {
+    '@/*': resolve('./src'),
+    '~/*': resolve('./src'),
+  },
 })
