@@ -15,6 +15,7 @@
         <template v-slot:content>
           <NuxtLink to="/uiElements/button">button</NuxtLink>
           <NuxtLink to="/uiElements/cards">cards</NuxtLink>
+          <NuxtLink to="/uiElements/tabs">tabs</NuxtLink>
         </template>
       </accordion>
     </li>
