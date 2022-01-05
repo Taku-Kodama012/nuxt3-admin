@@ -1,12 +1,17 @@
 <template>
-  <ul v-for="(item,index) in props.data" :key="index">
+  <ul v-for="item in props.tablist" :key="item.id">
     <li>{{item.title}}</li>
   </ul>
 </template>
+<script lang="ts">
+export default {
+  name:"Tab"
+}
+</script>
+
 <script setup lang="ts">
 
 //  タブ切り替えコンポーネント
-
 type TabItem = {
   id: number,
   title: string,
@@ -14,8 +19,7 @@ type TabItem = {
 }
 
 interface Props {
-  data: Array<TabItem>
+  tablist: Array<TabItem>
 }
-
 
 </script>

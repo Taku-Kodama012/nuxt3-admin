@@ -4,7 +4,7 @@
       <img :src="`../../assets/img/${props.fileName}.jpg`" :alt=props.imgAlt class="cardThumb">
     </template>
     <div class="cardInner">
-      <h3 class="cardTitle">
+      <h3 class="cardTitle" v-if="$slots.header">
         <slot name="header"></slot>
       </h3>
       <p class="cardDesc" :style="lineClamps">
