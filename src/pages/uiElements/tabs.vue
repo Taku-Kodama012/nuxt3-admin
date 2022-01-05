@@ -3,9 +3,9 @@
     <h2>tabs Components</h2>
     <card>
       <template v-slot:content>
-        <tab :tablist="tableList"/>
+        <tab :tablist="tabList" />
       </template>
-      </card>
+    </card>
   </div>
 </template>
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <ul v-for="item in props.tablist" :key="item.id">
+  <ul v-for="item in tablist" :key="item.id">
     <li>{{item.title}}</li>
   </ul>
 </template>
@@ -21,5 +21,5 @@ type TabItem = {
 interface Props {
   tablist: Array<TabItem>
 }
-
+const {tablist} = defineProps<Props>()
 </script>
