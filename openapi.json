@@ -1,0 +1,5132 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Mobile Order API",
+    "description": "モバイルオーダーアプリ及び管理画面向けのAPI",
+    "contact": {
+      "email": "support@example.com"
+    },
+    "version": "1.0.0-beta"
+  },
+  "paths": {
+    "/shops/{shopCode}/login": {
+      "post": {
+        "operationId": "LoginAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "モバイルオーダーAPIにログインしてアクセストークンを発行します",
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lineUserId": {
+                    "type": "string",
+                    "description": "LINEのユーザーID",
+                    "example": "testLineUserId1234"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "IDとトークン情報を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "customerToken": {
+                          "type": "string",
+                          "description": "モバイルオーダーAPIのアクセストークン",
+                          "example": "59f4njGYLOG9EuZuIrSv83dUvnIWzFLbo6Ri5mUOLm4q"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}": {
+      "get": {
+        "operationId": "GetShopAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "指定した店舗コードの店舗の詳細情報を返します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "1つの店舗情報を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "shopName": {
+                          "type": "string",
+                          "description": "店舗名",
+                          "example": "博多ラーメン 新宿東口店"
+                        },
+                        "imageUrl": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "店舗のロゴ画像",
+                          "example": "https://example.com/xxxxx.jpg"
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "description": "郵便番号",
+                          "example": "160-0022"
+                        },
+                        "address": {
+                          "type": "string",
+                          "description": "住所",
+                          "example": "東京都新宿区新宿３丁目３４−１１ B1F・6F ピースビル"
+                        },
+                        "openTime": {
+                          "type": "string",
+                          "description": "開店時間",
+                          "example": "10:00"
+                        },
+                        "closeTime": {
+                          "type": "string",
+                          "description": "閉店時間",
+                          "example": "23:00"
+                        },
+                        "colorCode": {
+                          "type": "string",
+                          "description": "カラーコード",
+                          "example": "#F5564C"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/tables/{tableCode}": {
+      "get": {
+        "operationId": "GetTableAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "指定したテーブルの名称と状態を返します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableCode",
+            "in": "path",
+            "description": "テーブルの識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.1035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "1つのテーブル情報を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "tableCode": {
+                          "type": "string",
+                          "description": "テーブルコード",
+                          "example": "24_1000016"
+                        },
+                        "tableName": {
+                          "type": "string",
+                          "description": "テーブル名",
+                          "example": "T-14"
+                        },
+                        "tableActivityState": {
+                          "type": "integer",
+                          "description": "テーブル稼働状態（0:未稼働、1:アクティブ）",
+                          "example": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/tables/{tableCode}/customer-number": {
+      "post": {
+        "operationId": "SetCustomerNumberAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "テーブルの利用人数を登録します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tableCode",
+            "in": "path",
+            "description": "テーブルの識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerNumber": {
+                    "type": "integer",
+                    "description": "利用人数(1〜99の整数)",
+                    "example": 4
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.4035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "人数の登録状態を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "tableCode": {
+                          "type": "string",
+                          "description": "テーブルコード",
+                          "example": "24_1000016"
+                        },
+                        "customerNumber": {
+                          "type": "integer",
+                          "description": "利用人数",
+                          "example": 4
+                        },
+                        "tableActivityState": {
+                          "type": "integer",
+                          "description": "処理後のテーブル稼働状態（0:未稼働、1:アクティブ、3:会計済み）",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/items": {
+      "get": {
+        "operationId": "GetItemAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "指定した店舗の商品一覧情報を返します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.1035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "部門ごとの全ての商品情報を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "categories": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "categoryName": {
+                                "type": "string",
+                                "description": "部門名"
+                              },
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "itemCode": {
+                                      "type": "string",
+                                      "description": "商品コード"
+                                    },
+                                    "itemName": {
+                                      "type": "string",
+                                      "description": "商品名"
+                                    },
+                                    "itemImageUrl": {
+                                      "type": "string",
+                                      "description": "商品画像URL"
+                                    },
+                                    "itemDescription": {
+                                      "type": "string",
+                                      "description": "商品の説明"
+                                    },
+                                    "itemPrice": {
+                                      "type": "integer",
+                                      "description": "商品の税抜価格"
+                                    },
+                                    "itemPriceTaxIn": {
+                                      "type": "integer",
+                                      "description": "商品の税込価格"
+                                    },
+                                    "itemState": {
+                                      "type": "integer",
+                                      "description": "商品の状態（0:販売中、1:売切）"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "categoryName": "フード",
+                              "items": [
+                                {
+                                  "itemCode": "111_1",
+                                  "itemName": "並盛り博多ラーメン＋餃子セット",
+                                  "itemImageUrl": "https://example.com/image1.png",
+                                  "itemDescription": "とんこつの旨味を極限まで抽出した旨味と香りが高いシルキーなスープに、博多らしい細麺を合わせた「博多豚骨ラーメン」と、博多ならではの小ぶりな一口サイズの餃子をセットにしました。博多ラーメンと餃子6個セットです。",
+                                  "itemPrice": 1000,
+                                  "itemPriceTaxIn": 1100,
+                                  "itemState": 0
+                                },
+                                {
+                                  "itemCode": "111_2",
+                                  "itemName": "並盛り博多ラーメン＋チャーハン＋餃子セット",
+                                  "itemImageUrl": "https://example.com/image2.png",
+                                  "itemDescription": "店長おすすめ！とんこつの旨味を極限まで抽出した旨味と香りが高いシルキーなスープに、博多らしい細麺を合わせた「博多豚骨ラーメン」と、博多ならではの小ぶりな一口サイズの餃子をセットにしました。博多ラーメンと餃子6個セットです。",
+                                  "itemPrice": 2000,
+                                  "itemPriceTaxIn": 2200,
+                                  "itemState": 0
+                                }
+                              ],
+                              "countItems": 2
+                            },
+                            {
+                              "categoryName": "ドリンク",
+                              "items": [
+                                {
+                                  "itemCode": "222_1",
+                                  "itemName": "生ビール 中ジョッキ",
+                                  "itemImageUrl": "https://example.com/image3.png",
+                                  "itemDescription": "生ビールの説明",
+                                  "itemPrice": 500,
+                                  "itemPriceTaxIn": 550,
+                                  "itemState": 0
+                                },
+                                {
+                                  "itemCode": "222_2",
+                                  "itemName": "エクストラコールド",
+                                  "itemImageUrl": "https://example.com/image4.png",
+                                  "itemDescription": "エクストラコールドの説明",
+                                  "itemPrice": 600,
+                                  "itemPriceTaxIn": 660,
+                                  "itemState": 1
+                                }
+                              ],
+                              "countItems": 2
+                            }
+                          ]
+                        },
+                        "countCategories": {
+                          "type": "integer",
+                          "description": "部門の配列の要素数",
+                          "example": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/items/{itemCode}": {
+      "get": {
+        "operationId": "GetItemDetailAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "指定した商品の詳細情報を返します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "itemCode",
+            "in": "path",
+            "description": "商品の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.2035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "1つの商品情報を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "itemCode": {
+                          "type": "string",
+                          "description": "商品コード",
+                          "example": "111_1"
+                        },
+                        "itemName": {
+                          "type": "string",
+                          "description": "商品名",
+                          "example": "博多ラーメン＋餃子セット"
+                        },
+                        "itemImageUrl": {
+                          "type": "string",
+                          "description": "商品画像URL",
+                          "example": "https://example.com/image1.png"
+                        },
+                        "itemDescription": {
+                          "type": "string",
+                          "description": "商品の説明",
+                          "example": "人気NO.１ !! とんこつの旨味を極限まで抽出した旨味と香りが高いシルキーなスープに、博多らしい細麺を合わせた「博多豚骨ラーメン」と、博多ならではの小ぶりな一口サイズの餃子をセットにしました。博多ラーメンと餃子6個セットです。"
+                        },
+                        "itemPrice": {
+                          "type": "integer",
+                          "description": "商品の税抜価格",
+                          "example": "1000"
+                        },
+                        "itemPriceTaxIn": {
+                          "type": "integer",
+                          "description": "商品の税込価格",
+                          "example": "1100"
+                        },
+                        "itemState": {
+                          "type": "integer",
+                          "description": "商品の状態（0:販売中、1:売切）",
+                          "example": 0
+                        },
+                        "detailName": {
+                          "type": "string",
+                          "description": "商品詳細群の名称",
+                          "example": "トッピング"
+                        },
+                        "countDetailContents": {
+                          "type": "integer",
+                          "description": "商品詳細の配列の要素数",
+                          "example": 3
+                        },
+                        "detailContents": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "detailContentName": {
+                                "type": "string",
+                                "description": "詳細商品名"
+                              },
+                              "detailContentCode": {
+                                "type": "string",
+                                "description": "詳細商品コード"
+                              },
+                              "detailContentPrice": {
+                                "type": "integer",
+                                "description": "詳細商品の税抜価格"
+                              },
+                              "detailContentPriceTaxIn": {
+                                "type": "integer",
+                                "description": "詳細商品の税込価格"
+                              },
+                              "detailContentState": {
+                                "type": "integer",
+                                "description": "詳細商品の状態（0:販売中、1:売切）"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "detailContentName": "海苔",
+                              "detailContentCode": "999_3",
+                              "detailContentPrice": 100,
+                              "detailContentPriceTaxIn": 110,
+                              "detailContentState": 0
+                            },
+                            {
+                              "detailContentName": "すだち",
+                              "detailContentCode": "999_4",
+                              "detailContentPrice": 200,
+                              "detailContentPriceTaxIn": 220,
+                              "detailContentState": 1
+                            },
+                            {
+                              "detailContentName": "ねぎ",
+                              "detailContentCode": "999_5",
+                              "detailContentPrice": 100,
+                              "detailContentPriceTaxIn": 110,
+                              "detailContentState": 0
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/order-lists": {
+      "post": {
+        "operationId": "AddOrderListItemAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "注文リストに商品を追加します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "itemCode": {
+                    "type": "string",
+                    "description": "商品の識別コード",
+                    "example": "24_1000032"
+                  },
+                  "itemNumber": {
+                    "type": "integer",
+                    "description": "商品の個数(1〜9の整数)",
+                    "example": 2
+                  },
+                  "detailContentCodes": {
+                    "type": "array",
+                    "description": "複数の詳細商品の識別コードを含む情報",
+                    "items": {
+                      "type": "string",
+                      "description": "詳細商品の識別コード"
+                    },
+                    "example": ["24_1000059", "24_1000015"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.1035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "追加された注文リスト商品IDを含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "orderListItemId": {
+                          "type": "integer",
+                          "description": "注文リスト商品ID(注文リストにおける序数)",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetOrderListsAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "注文リストの一覧情報を返します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.7035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "複数の注文リスト商品情報を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "totalPrice": {
+                          "type": "integer",
+                          "description": "注文リストの税抜合計価格",
+                          "example": 5500
+                        },
+                        "totalPriceTaxIn": {
+                          "type": "integer",
+                          "description": "注文リストの税込合計価格",
+                          "example": 6050
+                        },
+                        "countOrderListItems": {
+                          "type": "integer",
+                          "description": "注文リスト商品の配列の要素数",
+                          "example": 2
+                        },
+                        "orderListItems": {
+                          "type": "array",
+                          "description": "注文リスト商品の配列",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "orderListItemId": {
+                                "type": "integer",
+                                "description": "注文リスト商品ID"
+                              },
+                              "itemCode": {
+                                "type": "string",
+                                "description": "商品コード"
+                              },
+                              "itemName": {
+                                "type": "string",
+                                "description": "商品名"
+                              },
+                              "itemPrice": {
+                                "type": "integer",
+                                "description": "商品の税抜価格"
+                              },
+                              "itemPriceTaxIn": {
+                                "type": "integer",
+                                "description": "商品の税込価格"
+                              },
+                              "itemNumber": {
+                                "type": "integer",
+                                "description": "商品の個数"
+                              },
+                              "countOrderListDetailContents": {
+                                "type": "integer",
+                                "description": "注文リスト商品詳細の要素数"
+                              },
+                              "orderListDetailContents": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "detailContentName": {
+                                      "type": "string",
+                                      "description": "詳細商品名"
+                                    },
+                                    "detailContentCode": {
+                                      "type": "string",
+                                      "description": "詳細商品コード"
+                                    },
+                                    "detailContentPrice": {
+                                      "type": "integer",
+                                      "description": "詳細商品の税抜価格"
+                                    },
+                                    "detailContentPriceTaxIn": {
+                                      "type": "integer",
+                                      "description": "詳細商品の税込価格"
+                                    },
+                                    "detailContentState": {
+                                      "type": "integer",
+                                      "description": "詳細商品の状態（0:販売中、1:売切）"
+                                    }
+                                  }
+                                }
+                              },
+                              "itemImageUrl": {
+                                "type": "string",
+                                "description": "商品画像URL"
+                              },
+                              "itemState": {
+                                "type": "integer",
+                                "description": "商品の状態（0:販売中、1:売切）"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "orderListItemId": 1,
+                              "itemCode": "222_1",
+                              "itemName": "博多ラーメン＋餃子セット",
+                              "itemPrice": 1000,
+                              "itemPriceTaxIn": 1100,
+                              "itemNumber": 3,
+                              "countOrderListDetailContents": 2,
+                              "orderListDetailContents": [
+                                {
+                                  "detailContentName": "海苔",
+                                  "detailContentCode": "999_3",
+                                  "detailContentPrice": 100,
+                                  "detailContentPriceTaxIn": 110,
+                                  "detailContentState": 0
+                                },
+                                {
+                                  "detailContentName": "すだち",
+                                  "detailContentCode": "999_4",
+                                  "detailContentPrice": 200,
+                                  "detailContentPriceTaxIn": 220,
+                                  "detailContentState": 1
+                                }
+                              ],
+                              "itemImageUrl": "https://example.com/image1.png",
+                              "itemState": 1
+                            },
+                            {
+                              "orderListItemId": 2,
+                              "itemCode": "222_2",
+                              "itemName": "博多ラーメン＋チャーハン＋餃子セット",
+                              "itemPrice": 2000,
+                              "itemPriceTaxIn": 2200,
+                              "itemNumber": 1,
+                              "countOrderListDetailContents": 1,
+                              "orderListDetailContents": [
+                                {
+                                  "detailContentName": "海苔",
+                                  "detailContentCode": "999_3",
+                                  "detailContentPrice": 100,
+                                  "detailContentPriceTaxIn": 110,
+                                  "detailContentState": 0
+                                }
+                              ],
+                              "itemImageUrl": "https://example.com/image2.png",
+                              "itemState": 0
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "UpdateOrderListItemsNumberAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "注文リストの商品の数量を複数更新します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderListItems": {
+                    "type": "array",
+                    "description": "複数の注文リスト商品IDと個数を含む情報",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "orderListItemId": {
+                          "type": "integer",
+                          "description": "注文リスト商品のID"
+                        },
+                        "orderListItemNumber": {
+                          "type": "integer",
+                          "description": "変更する商品の個数(1〜99の整数)"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "orderListItemId": 1,
+                        "orderListItemNumber": 3
+                      },
+                      {
+                        "orderListItemId": 2,
+                        "orderListItemNumber": 1
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.1035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "更新された注文リスト商品を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "countUpdatedOrderListItems": {
+                          "type": "integer",
+                          "description": "更新された注文リスト商品の配列の要素数",
+                          "example": 2
+                        },
+                        "updatedOrderListItems": {
+                          "type": "array",
+                          "description": "注文リスト商品の配列",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "orderListItemId": {
+                                "type": "integer",
+                                "description": "注文リスト商品ID"
+                              },
+                              "orderListItemNumber": {
+                                "type": "integer",
+                                "description": "商品の個数"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "orderListItemId": 1,
+                              "orderListItemNumber": 3
+                            },
+                            {
+                              "orderListItemId": 2,
+                              "orderListItemNumber": 1
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/order-lists/{orderListItemId}": {
+      "patch": {
+        "operationId": "UpdateOrderListItemNumberAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "指定した注文リスト商品の数量を一つ更新します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderListItemId",
+            "in": "path",
+            "description": "注文リスト商品のID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderListItemNumber": {
+                    "type": "integer",
+                    "description": "商品の個数(1〜9の整数)",
+                    "example": 4
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.1035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "更新された注文リスト商品を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "orderListItemId": {
+                          "type": "integer",
+                          "description": "注文リスト商品ID",
+                          "example": 2
+                        },
+                        "orderListItemNumber": {
+                          "type": "integer",
+                          "description": "更新された注文リスト商品の個数",
+                          "example": 4
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "DeleteOrderListItemAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "指定した注文リスト商品を一つ削除します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderListItemId",
+            "in": "path",
+            "description": "注文リスト商品のID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.835649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/order": {
+      "post": {
+        "operationId": "CreateOrderAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "注文リストにある内容で注文を実行します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.9035649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "更新された注文リスト商品を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/unpaid-orders": {
+      "get": {
+        "operationId": "GetUnpaidOrderAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "未会計の注文情報一覧を返します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.0035649299621583
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "複数の未会計注文商品情報を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "totalPrice": {
+                          "type": "integer",
+                          "description": "未会計注文の税抜合計価格",
+                          "example": 5500
+                        },
+                        "totalPriceTaxIn": {
+                          "type": "integer",
+                          "description": "未会計注文の税込合計価格",
+                          "example": 6050
+                        },
+                        "countUnpaidOrderItems": {
+                          "type": "integer",
+                          "description": "未会計注文商品の要素数",
+                          "example": 2
+                        },
+                        "unpaidOrderItems": {
+                          "type": "array",
+                          "description": "未会計注文商品の配列",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "unpaidOrderItemId": {
+                                "type": "string",
+                                "description": "未会計注文商品ID"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "作成日時"
+                              },
+                              "itemCode": {
+                                "type": "string",
+                                "description": "商品コード"
+                              },
+                              "itemName": {
+                                "type": "string",
+                                "description": "商品名"
+                              },
+                              "itemImageUrl": {
+                                "type": "string",
+                                "description": "商品画像URL",
+                                "example": "https://example.com/image1.png"
+                              },
+                              "itemPrice": {
+                                "type": "integer",
+                                "description": "商品の税抜価格"
+                              },
+                              "itemPriceTaxIn": {
+                                "type": "integer",
+                                "description": "商品の税込価格"
+                              },
+                              "itemNumber": {
+                                "type": "integer",
+                                "description": "未会計注文商品の個数"
+                              },
+                              "countDetailContents": {
+                                "type": "integer",
+                                "description": "未会計注文商品詳細の要素数"
+                              },
+                              "detailContents": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "detailContentName": {
+                                      "type": "string",
+                                      "description": "詳細商品名"
+                                    },
+                                    "detailContentCode": {
+                                      "type": "string",
+                                      "description": "詳細商品コード"
+                                    },
+                                    "detailContentPrice": {
+                                      "type": "integer",
+                                      "description": "詳細商品の税抜価格"
+                                    },
+                                    "detailContentPriceTaxIn": {
+                                      "type": "integer",
+                                      "description": "詳細商品の税込価格"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "unpaidOrderItemId": 1,
+                              "createdAt": "2021-12-01 13:09",
+                              "itemCode": "222_1",
+                              "itemName": "博多ラーメン＋餃子セット",
+                              "itemImageUrl": "https://example.com/image1.png",
+                              "itemPrice": 1000,
+                              "itemPriceTaxIn": 1100,
+                              "itemNumber": 3,
+                              "countDetailContents": 2,
+                              "detailContents": [
+                                {
+                                  "detailContentName": "海苔",
+                                  "detailContentCode": "999_3",
+                                  "detailContentPrice": 100,
+                                  "detailContentPriceTaxIn": 110
+                                },
+                                {
+                                  "detailContentName": "すだち",
+                                  "detailContentCode": "999_4",
+                                  "detailContentPrice": 200,
+                                  "detailContentPriceTaxIn": 220
+                                }
+                              ]
+                            },
+                            {
+                              "UnpaidOrderItemId": 2,
+                              "createdAt": "2021-12-01 13:31",
+                              "itemCode": "222_2",
+                              "itemName": "博多ラーメン＋チャーハン＋餃子セット",
+                              "itemImageUrl": "https://example.com/image2.png",
+                              "itemPrice": 2000,
+                              "itemPriceTaxIn": 2200,
+                              "itemNumber": 1,
+                              "countDetailContents": 1,
+                              "detailContents": [
+                                {
+                                  "detailContentName": "海苔",
+                                  "detailContentCode": "999_3",
+                                  "detailContentPrice": 100,
+                                  "detailContentPriceTaxIn": 110
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops/{shopCode}/order-histories": {
+      "get": {
+        "operationId": "GetOrderHistoriesAPI",
+        "tags": ["モバイルオーダーアプリ向け"],
+        "summary": "指定した店舗における注文履歴一覧を返します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopCode",
+            "in": "path",
+            "description": "店舗の識別コード",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 1.3035649299621581
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "description": "複数の注文履歴情報を含むデータ",
+                      "type": "object",
+                      "properties": {
+                        "shopCode": {
+                          "type": "string",
+                          "description": "店舗コード",
+                          "example": "24_4"
+                        },
+                        "countOrderHistories": {
+                          "type": "integer",
+                          "description": "注文履歴の要素数",
+                          "example": 2
+                        },
+                        "orderHistories": {
+                          "type": "array",
+                          "description": "注文履歴の配列",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "orderHistoryId": {
+                                "type": "integer",
+                                "description": "1つの注文履歴のID"
+                              },
+                              "createdAt": {
+                                "type": "string",
+                                "description": "注文の作成日時"
+                              },
+                              "countOrderHistoryItems": {
+                                "type": "integer",
+                                "description": "1つの注文履歴に含まれる商品の要素数"
+                              },
+                              "orderItems": {
+                                "type": "array",
+                                "description": "1つの注文履歴の商品群の配列",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "orderItemId": {
+                                      "type": "string",
+                                      "description": "注文履歴商品ID"
+                                    },
+                                    "itemCode": {
+                                      "type": "string",
+                                      "description": "商品コード"
+                                    },
+                                    "itemName": {
+                                      "type": "string",
+                                      "description": "商品名"
+                                    },
+                                    "itemPrice": {
+                                      "type": "integer",
+                                      "description": "商品の税抜価格"
+                                    },
+                                    "itemPriceTaxIn": {
+                                      "type": "integer",
+                                      "description": "商品の税込価格"
+                                    },
+                                    "itemNumber": {
+                                      "type": "integer",
+                                      "description": "商品の個数"
+                                    }
+                                  }
+                                }
+                              },
+                              "totalPrice": {
+                                "type": "integer",
+                                "description": "1つの注文履歴の税抜合計価格"
+                              },
+                              "totalPriceTaxIn": {
+                                "type": "integer",
+                                "description": "1つの注文履歴の税込合計価格"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "orderHistoryId": 2,
+                              "createdAt": "2021-11-30 19:08",
+                              "totalPrice": 3700,
+                              "totalPriceTaxIn": 4070,
+                              "countOrderHistoryItems": 3,
+                              "orderHistoryItems": [
+                                {
+                                  "orderHistoryItemId": 3,
+                                  "itemCode": "222_1",
+                                  "itemName": "博多ラーメン＋餃子セット",
+                                  "itemPrice": 1000,
+                                  "itemPriceTaxIn": 1100,
+                                  "itemNumber": 2
+                                },
+                                {
+                                  "orderHistoryItemId": 4,
+                                  "itemCode": "222_2",
+                                  "itemName": "大盛り",
+                                  "itemPrice": 100,
+                                  "itemPriceTaxIn": 110,
+                                  "itemNumber": 2,
+                                  "countDetailContents": 1
+                                },
+                                {
+                                  "orderHistoryItemId": 5,
+                                  "itemCode": "222_1",
+                                  "itemName": "博多ラーメン＋チャーハン＋餃子セット",
+                                  "itemPrice": 1500,
+                                  "itemPriceTaxIn": 1650,
+                                  "itemNumber": 1
+                                }
+                              ]
+                            },
+                            {
+                              "orderHistoryId": 1,
+                              "createdAt": "2021-11-30 18:59",
+                              "totalPrice": 1600,
+                              "totalPriceTaxIn": 1760,
+                              "countOrderHistoryItems": 2,
+                              "orderHistoryItems": [
+                                {
+                                  "orderHistoryItemId": 1,
+                                  "itemCode": "111_1",
+                                  "itemName": "生ビール 中ジョッキ",
+                                  "itemPrice": 500,
+                                  "itemPriceTaxIn": 550,
+                                  "itemNumber": 2
+                                },
+                                {
+                                  "orderHistoryItemId": 2,
+                                  "itemCode": "111_2",
+                                  "itemName": "エクストラコールド",
+                                  "itemPrice": 600,
+                                  "itemPriceTaxIn": 660,
+                                  "itemNumber": 1
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.8535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/login": {
+      "post": {
+        "operationId": "AdminLogin",
+        "tags": ["管理画面向け"],
+        "summary": "管理画面にログインします",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "loginId": {
+                    "type": "string",
+                    "description": "ログインID",
+                    "example": "test-user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "description": "パスワード",
+                    "example": "hogehoge"
+                  }
+                }
+              },
+              "examples": {
+                "request1": {
+                  "summary": "仲本さんシステム管理者ログイン",
+                  "value": {
+                    "loginId": "yuto_nakamoto1@012grp.co.jp",
+                    "password": "L4MYuaEpULVW"
+                  }
+                },
+                "request2": {
+                  "summary": "仲本さん店舗管理者ログイン",
+                  "value": {
+                    "loginId": "yuto_nakamoto2@012grp.co.jp",
+                    "password": "L4MYuaEpULVW"
+                  }
+                },
+                "request3": {
+                  "summary": "仲本さん店舗作業者ログイン",
+                  "value": {
+                    "loginId": "yuto_nakamoto3@012grp.co.jp",
+                    "password": "L4MYuaEpULVW"
+                  }
+                },
+                "request4": {
+                  "summary": "小玉さんシステム管理者ログイン",
+                  "value": {
+                    "loginId": "taku_kodama1@012grp.co.jp",
+                    "password": "lXYMaHAWzPkE"
+                  }
+                },
+                "request5": {
+                  "summary": "小玉さん店舗管理者ログイン",
+                  "value": {
+                    "loginId": "taku_kodama2@012grp.co.jp",
+                    "password": "lXYMaHAWzPkE"
+                  }
+                },
+                "request6": {
+                  "summary": "小玉さん店舗作業者ログイン",
+                  "value": {
+                    "loginId": "taku_kodama3@012grp.co.jp",
+                    "password": "lXYMaHAWzPkE"
+                  }
+                },
+                "request7": {
+                  "summary": "内田さんシステム管理者ログイン",
+                  "value": {
+                    "loginId": "takayuki_uchida１@012grp.co.jp",
+                    "password": "AfXPdgBdShRr"
+                  }
+                },
+                "request8": {
+                  "summary": "内田さん店舗管理者ログイン",
+                  "value": {
+                    "loginId": "takayuki_uchida2@012grp.co.jp",
+                    "password": "AfXPdgBdShRr"
+                  }
+                },
+                "request9": {
+                  "summary": "内田さん店舗作業者ログイン",
+                  "value": {
+                    "loginId": "takayuki_uchida3@012grp.co.jp",
+                    "password": "AfXPdgBdShRr"
+                  }
+                },
+                "request10": {
+                  "summary": "青山さんシステム管理者ログイン",
+                  "value": {
+                    "loginId": "kouya_aoyama@012grp.co.jp",
+                    "password": "GGZLWGNyj3lc"
+                  }
+                },
+                "request1１": {
+                  "summary": "中嶋さんシステム管理者ログイン",
+                  "value": {
+                    "loginId": "hiroyuki_nakajima@012grp.co.jp",
+                    "password": "JMwVCnWVV8Pa"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string",
+                          "description": "アクセストークン",
+                          "example": "1|nnriogurwbgubdyvy631nidv"
+                        },
+                        "roleId": {
+                          "type": "integer",
+                          "description": "権限識別ID(1:SystemAdmin、2:ShopAdmin、3:ShopStaff)",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "ログインユーザー名",
+                          "example": "テストユーザー"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/auth": {
+      "post": {
+        "operationId": "AdminAuthCheck",
+        "tags": ["管理画面向け"],
+        "summary": "Bearerトークンが有効かチェックします",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "管理ユーザー名",
+                          "example": "テストユーザーさん"
+                        },
+                        "roleId": {
+                          "type": "integer",
+                          "description": "権限識別ID",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/logout": {
+      "post": {
+        "operationId": "AdminLogout",
+        "tags": ["管理画面向け"],
+        "summary": "管理画面からログアウトします",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "ログアウトしました"
+                    },
+                    "data": {
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "operationId": "GetAdminUsers",
+        "tags": ["管理画面向け"],
+        "summary": "管理ユーザー一覧を取得します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "query",
+            "description": "店舗の識別ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "isPublic",
+            "in": "query",
+            "description": "公開状態",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "ユーザー名",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "管理ユーザー識別ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "管理ユーザー名"
+                          },
+                          "isPublic": {
+                            "type": "boolean",
+                            "description": "公開状態"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": 1,
+                          "name": "テストユーザー1",
+                          "isPublic": true
+                        },
+                        {
+                          "id": 2,
+                          "name": "テストユーザー2",
+                          "isPublic": false
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/users/{userId}/detail": {
+      "get": {
+        "operationId": "GetAdminUserDetail",
+        "tags": ["管理画面向け"],
+        "summary": "管理ユーザー詳細を取得します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "管理ユーザー識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "管理ユーザー識別ID",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "管理ユーザー名",
+                          "example": "テストさん"
+                        },
+                        "email": {
+                          "type": "string",
+                          "description": "Eメールアドレス",
+                          "example": "test-user@example.com"
+                        },
+                        "roleId": {
+                          "type": "integer",
+                          "description": "権限識別ID",
+                          "example": 1
+                        },
+                        "isPublic": {
+                          "type": "boolean",
+                          "description": "公開状態",
+                          "example": true
+                        },
+                        "shops": {
+                          "type": "array",
+                          "description": "管理店舗",
+                          "items": {
+                            "properties": {
+                              "id": {
+                                "type": "integer",
+                                "description": "店舗識別ID"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "店舗名"
+                              }
+                            }
+                          },
+                          "example": [
+                            {
+                              "id": 1,
+                              "name": "◯◯ラーメン"
+                            },
+                            {
+                              "id": 2,
+                              "name": "◯◯カレー"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/admin/users/save": {
+      "post": {
+        "operationId": "SaveAdminUser",
+        "tags": ["管理画面向け"],
+        "summary": "管理ユーザーを登録・更新します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "管理ユーザー識別ID(新規登録の時はnull)",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "管理ユーザー名",
+                    "example": "テストユーザー"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "description": "Eメールアドレス",
+                    "example": "test@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "description": "パスワード",
+                    "example": "hoge1234"
+                  },
+                  "roleId": {
+                    "type": "integer",
+                    "description": "権限識別ID",
+                    "example": 1
+                  },
+                  "isPublic": {
+                    "type": "boolean",
+                    "description": "公開状態(true:公開、false:未公開)",
+                    "example": true
+                  },
+                  "shops": {
+                    "type": "array",
+                    "description": "管理店舗",
+                    "items": {
+                      "type": "integer",
+                      "description": "店舗識別ID"
+                    },
+                    "example": [1, 2]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "管理ユーザー識別ID",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "管理ユーザー名",
+                          "example": "テストユーザー"
+                        },
+                        "email": {
+                          "type": "string",
+                          "format": "email",
+                          "description": "Eメールアドレス",
+                          "example": "test@example.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "format": "password",
+                          "description": "パスワード",
+                          "example": "hoge1234"
+                        },
+                        "roleId": {
+                          "type": "integer",
+                          "description": "権限識別ID",
+                          "example": 1
+                        },
+                        "isPublic": {
+                          "type": "boolean",
+                          "description": "公開状態",
+                          "example": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "errors": {
+                          "type": "object",
+                          "properties": {
+                            "errors": {
+                              "type": "object",
+                              "description": "エラー情報",
+                              "properties": {
+                                "name": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "description": "nameのエラー情報"
+                                  }
+                                },
+                                "email": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "description": "emailのエラー情報"
+                                  }
+                                },
+                                "password": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "description": "passwordのエラー情報"
+                                  }
+                                },
+                                "roleId": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "description": "roleIdのエラー情報"
+                                  }
+                                },
+                                "isPublic": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "description": "isPublicのエラー情報"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "errors": {
+                          "name": ["管理ユーザー名は必須です。"],
+                          "email": [
+                            "そのEメールアドレスはすでに使われています。"
+                          ],
+                          "password": ["パスワードは必須です。"],
+                          "roleId": ["指定された権限識別IDは存在しません。"],
+                          "isPublic": ["公開状態の設定値は無効です。"]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops": {
+      "get": {
+        "operationId": "GetShops",
+        "tags": ["管理画面向け"],
+        "summary": "店舗情報の一覧を取得します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "店舗識別ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "店舗名"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": 1,
+                          "name": "喜多方ラーメン ◯◯店"
+                        },
+                        {
+                          "id": 2,
+                          "name": "カレーライスのＸＸ △△店"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/{shopId}/detail": {
+      "get": {
+        "operationId": "GetShopDetail",
+        "tags": ["管理画面向け"],
+        "summary": "店舗情報の詳細情報を取得します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "店舗識別ID",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "店舗名",
+                          "example": "喜多方ラーメン ◯◯店"
+                        },
+                        "imageUrl": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "店舗イメージ画像URL",
+                          "example": "https://example.com/xxx.jpg"
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "description": "郵便番号",
+                          "example": "００１１２３４"
+                        },
+                        "address": {
+                          "type": "string",
+                          "description": "店舗所在地",
+                          "example": "東京都杉並区◯◯町 123-456"
+                        },
+                        "openTime": {
+                          "type": "string",
+                          "description": "開店時刻",
+                          "example": "１０：００"
+                        },
+                        "closeTime": {
+                          "type": "string",
+                          "description": "閉店時刻",
+                          "example": "２２：００"
+                        },
+                        "colorCode": {
+                          "type": "string",
+                          "description": "カラーコード"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "備考"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/save": {
+      "post": {
+        "operationId": "SaveShop",
+        "tags": ["管理画面向け"],
+        "summary": "店舗情報を更新します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "店舗識別ID"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "店舗名"
+                  },
+                  "imageUrl": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "店舗画像URL"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "店舗画像バイナリ(base64でエンコードする)"
+                  },
+                  "imageFilename": {
+                    "type": "string",
+                    "description": "店舗画像ファイル名(拡張子も含む)"
+                  },
+                  "zipCode": {
+                    "type": "integer",
+                    "description": "郵便番号"
+                  },
+                  "address": {
+                    "type": "string",
+                    "description": "住所"
+                  },
+                  "openTime": {
+                    "type": "string",
+                    "description": "開店時刻"
+                  },
+                  "closeTime": {
+                    "type": "string",
+                    "description": "閉店時刻"
+                  },
+                  "colorCode": {
+                    "type": "string",
+                    "description": "カラーコード"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "備考"
+                  }
+                }
+              },
+              "examples": {
+                "request1": {
+                  "summary": "画像登録が不要な登録パターン",
+                  "value": {
+                    "id": 1,
+                    "name": "テスト店舗名",
+                    "imageUrl": null,
+                    "image": null,
+                    "imageFilename": null,
+                    "zipCode": 1234567,
+                    "address": "テスト住所",
+                    "openTime": "10:00",
+                    "closeTime": "22:00",
+                    "colorCode": "#FF0000",
+                    "comment": "コメント"
+                  }
+                },
+                "request2": {
+                  "summary": "新規で画像登録、または更新するパターン",
+                  "value": {
+                    "id": 1,
+                    "name": "テスト店舗名",
+                    "imageUrl": "null(detail取得でURLがあっても、画像更新時はnullにする)",
+                    "image": "asniubnugbuwr....(base64エンコードした文字列)",
+                    "imageFilename": "testImage.jpg",
+                    "zipCode": 1234567,
+                    "address": "テスト住所",
+                    "openTime": "10:00",
+                    "closeTime": "22:00",
+                    "colorCode": "#FF0000",
+                    "comment": "コメント"
+                  }
+                },
+                "request3": {
+                  "summary": "画像登録済みで、変更せず更新するパターン",
+                  "value": {
+                    "id": 1,
+                    "name": "テスト店舗名",
+                    "imageUrl": "https://mobileorder-storage-production.s3.ap-northeast-1.amazonaws.com/app/public/shops/1/testImage.jpg",
+                    "image": null,
+                    "imageFilename": null,
+                    "zipCode": 1234567,
+                    "address": "テスト住所",
+                    "openTime": "10:00",
+                    "closeTime": "22:00",
+                    "colorCode": "#FF0000",
+                    "comment": "コメント"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "店舗識別ID",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "店舗名",
+                          "example": "喜多方ラーメン ◯◯店"
+                        },
+                        "imageUrl": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "店舗イメージ画像URL",
+                          "example": "https://example.com/xxx.jpg"
+                        },
+                        "zipCode": {
+                          "type": "string",
+                          "description": "郵便番号",
+                          "example": "００１１２３４"
+                        },
+                        "address": {
+                          "type": "string",
+                          "description": "店舗所在地",
+                          "example": "東京都杉並区◯◯町 123-456"
+                        },
+                        "openTime": {
+                          "type": "string",
+                          "description": "開店時刻",
+                          "example": "１０：００"
+                        },
+                        "closeTime": {
+                          "type": "string",
+                          "description": "閉店時刻",
+                          "example": "２２：００"
+                        },
+                        "colorCode": {
+                          "type": "string",
+                          "description": "カラーコード"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "備考"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 422
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "入力値が正しくありません。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "errors": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "description": "nameのエラー情報"
+                              }
+                            },
+                            "image": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "description": "emailのエラー情報"
+                              }
+                            },
+                            "zipCode": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "description": "passwordのエラー情報"
+                              }
+                            },
+                            "address": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "description": "roleIdのエラー情報"
+                              }
+                            },
+                            "openTime": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "description": "openTimeのエラー情報"
+                              }
+                            },
+                            "closeTime": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "description": "closeTimeのエラー情報"
+                              }
+                            },
+                            "colorCode": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "description": "roleIdのエラー情報"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "example": {
+                        "errors": {
+                          "name": ["店舗名は必須です。"],
+                          "image": [
+                            "画像ファイル拡張子はjpg、png、gifで指定して下さい"
+                          ],
+                          "zipCode": ["郵便番号は必須です。"],
+                          "address": ["店舗住所は必須です。"],
+                          "openTime": [
+                            "開店時刻と閉店時刻は両方入力してください"
+                          ],
+                          "closeTime": [
+                            "時刻は00:00〜23:59までの間で指定してください"
+                          ],
+                          "colorCode": ["カラーコードは必須です。"]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/{shopId}/sync": {
+      "post": {
+        "operationId": "SyncData",
+        "tags": ["管理画面向け"],
+        "summary": "Blayn管理画面に登録済みのカテゴリ、商品、テーブルと同期します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Fatal Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "サーバーでエラーが発生しました。(Wiz内部の場合) or 同期処理に失敗しました(blaynから正常なレスポンスを受け取れなかった場合)"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/{shopId}/seats": {
+      "get": {
+        "operationId": "GetSeats",
+        "tags": ["管理画面向け"],
+        "summary": "選択した店舗のテーブル情報一覧を取得します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "テーブル識別ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "テーブル名"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": 1,
+                          "name": "10番テーブル"
+                        },
+                        {
+                          "id": 2,
+                          "name": "20番テーブル"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/{shopId}/seats/{seatId}/qrcode": {
+      "get": {
+        "operationId": "GetQrCode",
+        "tags": ["管理画面向け"],
+        "summary": "選択したテーブルのQRコードを作成・取得します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "seatId",
+            "in": "path",
+            "description": "テーブルの識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "QRコードのURL(pdfファイルの配置先URL)",
+                          "example": "https://mobileorder-storage-localtest.s3.ap-northeast-1.amazonaws.com/app/public/seats/1/99_1234567.pdf"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/{shopId}/items": {
+      "get": {
+        "operationId": "GetItems",
+        "tags": ["管理画面向け"],
+        "summary": "店舗に紐づく商品一覧を取得します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "description": "商品カテゴリ識別ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "商品名",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "商品識別ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "商品名"
+                          },
+                          "imageUrl": {
+                            "type": "string",
+                            "format": "url",
+                            "description": "商品画像URL"
+                          },
+                          "price": {
+                            "type": "string",
+                            "description": "商品価格"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": 1,
+                          "name": "なっぱす",
+                          "imageUrl": "https://example.com/xxx.jpg",
+                          "price": "¥700"
+                        },
+                        {
+                          "id": 2,
+                          "name": "カレーライス",
+                          "imageUrl": "https://example.com/yyy.jpg",
+                          "price": "¥1,280"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/{shopId}/items/{itemId}/detail": {
+      "get": {
+        "operationId": "GetItemDetail",
+        "tags": ["管理画面向け"],
+        "summary": "選択された商品IDの詳細情報を取得します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "商品識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "商品識別ID",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "商品名",
+                          "example": "なっぱす"
+                        },
+                        "imageUrl": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "商品画像URL",
+                          "example": "https://example.com/xxx.jpg"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/{shopId}/items/{itemId}/save": {
+      "post": {
+        "operationId": "SaveItemImage",
+        "tags": ["管理画面向け"],
+        "summary": "商品の画像情報を登録・更新します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "商品の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "imageUrl": {
+                    "type": "string",
+                    "format": "url",
+                    "description": "商品画像URL"
+                  },
+                  "image": {
+                    "type": "string",
+                    "description": "商品画像バイナリ(base64でエンコードする)"
+                  },
+                  "imageFilename": {
+                    "type": "string",
+                    "description": "商品画像ファイル名(拡張子も含む)"
+                  }
+                }
+              },
+              "examples": {
+                "request1": {
+                  "summary": "新規で画像登録、または更新するパターン",
+                  "value": {
+                    "imageUrl": "null(detail取得でURLがあっても、画像更新時はnullにする)",
+                    "image": "asniubnugbuwr....(base64エンコードした文字列)",
+                    "imageFilename": "testImage.jpg"
+                  }
+                },
+                "request2": {
+                  "summary": "画像登録済みで、変更せず更新するパターン",
+                  "value": {
+                    "imageUrl": "https://mobileorder-storage-production.s3.ap-northeast-1.amazonaws.com/app/public/items/1/testImage.jpg",
+                    "image": null,
+                    "imageFilename": null
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "description": "商品識別ID",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "商品名",
+                          "example": "なっぱす"
+                        },
+                        "imageUrl": {
+                          "type": "string",
+                          "format": "url",
+                          "description": "商品イメージ画像URL",
+                          "example": "https://example.com/xxx.jpg"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/shops/{shopId}/items/{itemId}/delete": {
+      "delete": {
+        "operationId": "DeleteItemImage",
+        "tags": ["管理画面向け"],
+        "summary": "商品の画像情報を削除します",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "商品の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/select/shops": {
+      "get": {
+        "operationId": "GetSelectShops",
+        "tags": ["管理画面向け"],
+        "summary": "店舗情報の一覧を取得します(セレクトボックス作成用)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "店舗識別ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "店舗名"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": 1,
+                          "name": "喜多方ラーメン ◯◯店"
+                        },
+                        {
+                          "id": 2,
+                          "name": "カレーライスのＸＸ △△店"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/select/{shopId}/categories": {
+      "get": {
+        "operationId": "GetSelectCategories",
+        "tags": ["管理画面向け"],
+        "summary": "商品カテゴリの一覧を取得します(セレクトボックス作成用)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "shopId",
+            "in": "path",
+            "description": "店舗の識別ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HTTP OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "処理が正常終了しました。"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "description": "カテゴリ識別ID"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "カテゴリ名"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": 1,
+                          "name": "パスタ"
+                        },
+                        {
+                          "id": 2,
+                          "name": "ご飯"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "description": "HTTP STATUSの値",
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "response_time": {
+                      "description": "リクエストからレスポンスまでの時間(マイクロ秒)",
+                      "type": "number",
+                      "format": "double",
+                      "example": 0.9535649299621582
+                    },
+                    "message": {
+                      "description": "サーバ側で設定した任意のメッセージ",
+                      "type": "string",
+                      "example": "認証に失敗しました。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
