@@ -25,6 +25,12 @@
         users
       </NuxtLink>
     </li>
+    <li class="navListItem">
+      <NuxtLink to="/login">
+        <i class="fas fa-users navIcon"></i>
+        login
+      </NuxtLink>
+    </li>
   </ul>
 </template>
 <script lang="ts">

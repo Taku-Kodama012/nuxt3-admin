@@ -1,5 +1,5 @@
 <template>
-  <button @click="clickEmit">
+  <button @click="clickEmit" class="hamburgerBtn">
       <i class="fas fa-bars"></i>
   </button>
 </template>
@@ -17,3 +17,9 @@ export default defineComponent({
   }
 })
 </script>
+<style lang="sass" scoped>
+.hamburgerBtn
+  border: none
+  background: none
+  cursor: pointer
+</style>
