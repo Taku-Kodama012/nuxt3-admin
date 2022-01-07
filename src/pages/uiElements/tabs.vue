@@ -3,7 +3,10 @@
     <h2>tabs Components</h2>
     <card>
       <template v-slot:content>
-        <tab :tablist="tabList" />
+        <tab tabTitle="sample01" :tabList="tabList">
+          <template v-slot:tabContent-1>hogehoge</template>>
+          <template v-slot:tabContent-2>fugafuga</template>>
+        </tab>
       </template>
     </card>
   </div>
@@ -16,10 +19,7 @@ import Tab from "../../components/block/Tabs.vue"
 export default defineComponent({
   components:{Card,Tab},
   setup(){
-    const tabList = [
-      {id:1,title:"tab01",content:"hogehogehoge"},
-      {id:2,title:"tab02",content:"fugafuga"}
-    ]
+    const tabList = ['tab1','tab2']
     return{
       tabList
     }

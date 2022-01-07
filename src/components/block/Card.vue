@@ -7,9 +7,9 @@
       <h3 class="cardTitle" v-if="$slots.header">
         <slot name="header"></slot>
       </h3>
-      <p class="cardDesc" :style="lineClamps">
+      <div class="cardDesc" :style="lineClamps">
         <slot name="content"></slot>
-      </p>
+      </div>
     </div>
   </div>
 </template>
