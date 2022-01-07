@@ -6,20 +6,22 @@
     <div class="mainContent">
       <custom-header />
       <div class="mainContent">
-      <NuxtPage />
+      <!-- <NuxtPage /> -->
+      <slot />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import {defineComponent,SetupContext} from 'vue'
 
-import CustomSidebar from "../block/common/sidebar/CustomSidebar.vue"
-import CustomHeader from "../block/common/header/CustomHeader.vue"
-export default defineComponent({
-  components:{CustomSidebar,CustomHeader}
-})
+import CustomSidebar from "../components/block/common/sidebar/CustomSidebar.vue"
+import CustomHeader from "../components/block/common/header/CustomHeader.vue"
+export default {
+  name: 'two',
+  components:{CustomSidebar,CustomHeader},
+}
 </script>
+
 <style lang="sass" scoped>
 .contentWrap
   display: flex

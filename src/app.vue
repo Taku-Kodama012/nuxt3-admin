@@ -1,14 +1,11 @@
 <template>
   <div>
-    <two-columns />
+    <!-- <two-columns /> -->
+    <NuxtPage />
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
-import TwoColumns from './components/Layout/TwoColumns.vue'
-export default defineComponent({
-  components: { TwoColumns },
-})
+
 </script>
 <style lang="sass">
 ul

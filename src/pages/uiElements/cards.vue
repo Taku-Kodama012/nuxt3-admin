@@ -60,6 +60,7 @@ import {defineComponent,SetupContext} from 'vue'
 import Card from "../../components/block/Card.vue"
 import FlexContainer from "../../components/container/FlexBox.vue"
 export default defineComponent({
+  layout:"two",
   components:{Card,FlexContainer}
 })
 </script>

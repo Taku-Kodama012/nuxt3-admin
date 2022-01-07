@@ -17,6 +17,7 @@ import Card from "../../components/block/Card.vue"
 import Tab from "../../components/block/Tabs.vue"
 
 export default defineComponent({
+  layout:"two",
   components:{Card,Tab},
   setup(){
     const tabList = ['tab1','tab2']

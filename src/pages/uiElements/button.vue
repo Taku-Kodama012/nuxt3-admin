@@ -85,6 +85,7 @@ import CustomButton from "../../components/atoms/Button.vue"
 import ButtonIcons from "../../components/atoms/ButtonWithIcon.vue"
 import Card from "../../components/block/Card.vue"
 export default defineComponent({
+  layout:"two",
   components:{ flexContainer,CustomButton,ButtonIcons, Card },
   setup(_props:Props,context:SetupContext){
     const parentEvent = () => {

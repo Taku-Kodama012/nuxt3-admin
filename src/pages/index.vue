@@ -5,16 +5,15 @@
     </card>
   </div>
 </template>
+
 <script lang="ts">
-import {defineComponent,SetupContext} from 'vue'
-
 import Card from "../components/block/Card.vue"
-
-export default defineComponent({
+export default {
   components:{
     Card
-  }
-})
+  },
+  layout:"two"
+}
 </script>
 <style lang="sass">
 @import '../style/page.sass'
