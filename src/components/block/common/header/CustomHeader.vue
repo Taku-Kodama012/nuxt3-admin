@@ -4,7 +4,6 @@
       <hamburger @clickParent="store.setSidebarToggle()"/>
     </div>
     <div>
-      nav link
     </div>
     <div>
       <p class="avater">

@@ -9,7 +9,7 @@
     <li class="navListItem">
       <accordion>
         <template v-slot:label>
-          <i class="fab fa-buromobelexperte navIcon"></i>
+          <i class="fab fa-elementor navIcon"></i>
           UI Elements
         </template>
         <template v-slot:content>
@@ -27,8 +27,8 @@
     </li>
     <li class="navListItem">
       <NuxtLink to="/login">
-        <i class="fas fa-users navIcon"></i>
-        login
+        <i class="fas fa-sign-out-alt navIcon"></i>
+        logout
       </NuxtLink>
     </li>
   </ul>
