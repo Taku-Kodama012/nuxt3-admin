@@ -4,7 +4,7 @@ import { resolve } from 'path'
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
   nitro: {
-    preset: 'server',
+    preset: 'lambda',
   },
   target: 'static',
   srcDir: './src/',
