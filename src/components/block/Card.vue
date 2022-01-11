@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <template v-if="props.fileName">
-      <img :src="`../../assets/img/${props.fileName}.jpg`" :alt=props.imgAlt class="cardThumb">
+      <img :src="`/img/${props.fileName}.jpg`" :alt=props.imgAlt class="cardThumb">
     </template>
     <div class="cardInner">
       <h3 class="cardTitle" v-if="$slots.header">
