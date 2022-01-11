@@ -3,6 +3,9 @@ import { resolve } from 'path'
 
 // https://v3.nuxtjs.org/docs/directory-structure/nuxt.config
 export default defineNuxtConfig({
+  nitro: {
+    preset: 'server',
+  },
   target: 'static',
   srcDir: './src/',
   buildModules: [['@pinia/nuxt', { disableVuex: true }]],
